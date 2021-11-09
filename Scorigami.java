@@ -6,11 +6,11 @@ import java.io.IOException;
  */
 public class Scorigami {
     private static final String MLR = "5070";
-    private static final String MLR_DATA_PATH = "/home/haim/Desktop/Scorigami/lib/mlr_data";
-    private static final String MLR_KEYS_PATH = "/home/haim/Desktop/Scorigami/lib/mlr_keys";
+    private static final String MLR_DATA_PATH = "****/Scorigami/lib/mlr_data";
+    private static final String MLR_KEYS_PATH = "****/Scorigami/lib/mlr_keys";
     private static final String SIX_NATIONS = "4714";
-    private static final String SIX_NATIONS_DATA_PATH = "/home/haim/Desktop/Scorigami/lib/6n_data";
-    private static final String SIX_NATIONS_KEYS_PATH = "/home/haim/Desktop/Scorigami/lib/six_nations_keys";
+    private static final String SIX_NATIONS_DATA_PATH = "****/Scorigami/lib/6n_data";
+    private static final String SIX_NATIONS_KEYS_PATH = "****/Scorigami/lib/six_nations_keys";
 
     /**
      * main method.
