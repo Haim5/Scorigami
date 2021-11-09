@@ -23,24 +23,6 @@ public class ApiFetcher {
     private static final String POSTPONED =  "\"strPostponed\"";
     private static final String ID = "\"idEvent\"";
 
-//    example:
-//    public void fetchGame() throws IOException {
-//        String url ="https://www.thesportsdb.com/api/v1/json/1/eventspastleague.php";
-//
-//        String query = String.format("id=%s",
-//                URLEncoder.encode("5070", StandardCharsets.UTF_8));
-//
-//        URLConnection connection = new URL(url + "?" + query).openConnection();
-//        connection.setRequestProperty("Accept-Charset", "UTF-8");
-//        InputStream response = connection.getInputStream();
-//
-//        try (Scanner scanner = new Scanner(response)) {
-//            String responseBody = scanner.useDelimiter("\\A").next();
-//            System.out.println(responseBody);
-//        }
-//
-//    }
-
     /**
      * fetch the last 15 games of the league.
      * @param leagueCode the code of the league we want to check.
