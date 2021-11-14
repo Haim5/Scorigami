@@ -38,11 +38,12 @@ public class StatsMaker {
             return s;
         }
         Score[] scores = new Score[2*MAX];
-        for (int i = Math.max(s.getHomeScore(), s.getAwayScore()); i < MAX; i++) {
-            for (int j = Math.min(s.getHomeScore(), s.getAwayScore()); j < MAX; j++) {
+        for (int i = s.getHomeScore(); i < MAX; i++) {
+            for (int j = s.getAwayScore(); j < MAX; j++) {
                 Score temp = new Score(i, j);
                 if (isScorigami(temp) && isValidRugbyDistance(s, temp)) {
                     scores[s.distanceByPoints(temp)] = temp;
+                    break;
                 }
             }
         }
@@ -80,8 +81,8 @@ public class StatsMaker {
             return s;
         }
         Score[] scores = new Score[MAX];
-        for (int i = Math.max(s.getHomeScore(), s.getAwayScore()); i < MAX; i++) {
-            for (int j = Math.min(s.getHomeScore(), s.getAwayScore()); j < MAX; j++) {
+        for (int i = s.getHomeScore(); i < MAX; i++) {
+            for (int j = s.getAwayScore(); j < MAX; j++) {
                 Score temp = new Score(i, j);
                 if (isScorigami(temp) && isValidRugbyDistance(s, temp)) {
                     if (scores[s.distanceByPoss(temp)] == null) {
