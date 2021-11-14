@@ -74,7 +74,7 @@ public class Score {
     }
 
     /**
-     * get the number of possessions between two scores.
+     * get the minimal number of possessions between two scores.
      * @param other the score we compare with.
      * @return int
      */
