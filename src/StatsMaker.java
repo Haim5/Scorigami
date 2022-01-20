@@ -33,28 +33,6 @@ public class StatsMaker {
      * @param s the score we start from.
      * @return the closest scorigami by points.
      */
-//    public Score closestScorigamiByPoints(Score s) {
-//        // edge case - the score is a scorigami - return the score.
-//        if (isScorigami(s)) {
-//            return s;
-//        }
-//        Score answer = null;
-//        int minimalMargin = Integer.MAX_VALUE, home = s.getHomeScore(), away = s.getAwayScore(), i, j;
-//        for (i = away; i - away <= minimalMargin; i++) {
-//            // for (i = awa, int k = i - away; k <= minimalMargin; i++, k++)
-//            // j - home <= minimalMargin - i + away???
-//            for (j = home; j - home <= minimalMargin; j++) {
-//                Score temp = new Score(j, i);
-//                int currMargin = s.distanceByPoints(temp);
-//                if (currMargin < minimalMargin && isScorigami(temp) && isValidRugbyDistance(s, temp)) {
-//                    answer = temp;
-//                    minimalMargin = currMargin;
-//                }
-//            }
-//        }
-//        return answer;
-//    }
-
     public Score closestScorigamiByPoints(Score s) {
         // edge case - the score is a scorigami - return the score.
         if (isScorigami(s)) {
@@ -75,21 +53,6 @@ public class StatsMaker {
         }
         return answer;
     }
-
-//            for (int i = Math.max(s.getHomeScore(), s.getAwayScore()); i < MAX; i++) {
-//        for (int j = Math.min(s.getHomeScore(), s.getAwayScore()); j < MAX; j++) {
-//            Score temp = new Score(i, j);
-//            if (isScorigami(temp) && isValidRugbyDistance(s, temp)) {
-//                if (scores[s.distanceByPoints(temp)] == null) {
-//                    scores[s.distanceByPoints(temp)] = temp;
-//                } else {
-//                    if (s.distanceByPoints(temp) <= s.distanceByPoints(scores[s.distanceByPoints(temp)])) {
-//                        scores[s.distanceByPoints(temp)] = temp;
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     /**
      * check if the margin between the two scores is valid in rugby.
