@@ -8,12 +8,12 @@ import java.nio.file.Path;
  */
 public class Scorigami {
     private static final String MLR = "5070";
-    private static final String MLR_DATA_PATH = "/home/haim/Desktop/Scorigami/lib/mlr_data";
-    private static final String MLR_KEYS_PATH = "/home/haim/Desktop/Scorigami/lib/mlr_keys";
+    private static final String MLR_DATA_PATH = "***";
+    private static final String MLR_KEYS_PATH = "***";
     private static final String SIX_NATIONS = "4714";
-    private static final String SIX_NATIONS_DATA_PATH = "/home/haim/Desktop/Scorigami/lib/6n_data";
-    private static final String SIX_NATIONS_KEYS_PATH = "/home/haim/Desktop/Scorigami/lib/six_nations_keys";
-    private static final String API_KEY_PATH = "/home/haim/Desktop/Scorigami/lib/api_key";
+    private static final String SIX_NATIONS_DATA_PATH = "***";
+    private static final String SIX_NATIONS_KEYS_PATH = "***";
+    private static final String API_KEY_PATH = "***";
 
     /**
      * main method.
@@ -27,10 +27,10 @@ public class Scorigami {
 
         // make output manager for each league and update.
         OutputManager mlrOutputManager = new OutputManager(MLR_DATA_PATH, MLR, "MLR", MLR_KEYS_PATH, k);
-        mlrOutputManager.update(true);
+        mlrOutputManager.update(false);
 
-//        OutputManager sixNationsOutputManager = new OutputManager(SIX_NATIONS_DATA_PATH, SIX_NATIONS,
-//                "Six Nations", SIX_NATIONS_KEYS_PATH, k);
-//        sixNationsOutputManager.update(false);
+       OutputManager sixNationsOutputManager = new OutputManager(SIX_NATIONS_DATA_PATH, SIX_NATIONS,
+               "Six Nations", SIX_NATIONS_KEYS_PATH, k);
+       sixNationsOutputManager.update(false);
      }
 }
