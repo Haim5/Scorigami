@@ -31,13 +31,6 @@ public class OutputManager {
      * @throws IOException .
      */
     OutputManager(String path, String leagueCode, String leagueName, String keysPath, String api) throws IOException {
-//        this.sm.add(Path.of(path));
-//        this.leagueCode = leagueCode;
-//        this.stat = new StatsMaker(this.sm);
-//        this.path = path;
-//        this.name = leagueName;
-//        this.tweeter = new Tweeter(keysPath);
-//        this.api = new ApiFetcher(api);
         this(path, leagueCode, leagueName, keysPath, new ApiFetcher(api));
     }
 
@@ -200,10 +193,6 @@ public class OutputManager {
             }
             System.out.print("\n");
         }
-    }
-
-    private LocalDateTime getNextGameDate() throws IOException {
-        return api.nextGame(leagueCode);
     }
 
 }
