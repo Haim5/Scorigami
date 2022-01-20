@@ -52,19 +52,7 @@ public class ScorigamiMap {
             ml.removeFirst();
         }
     }
-
-//    /**
-//     * add all matches of a league to the database.
-//     * @param api api fetcher used to fetch data from the internet.
-//     * @param leagueCode the code of the league.
-//     * @param inauguralSeason the first season of the league (which year to start from).
-//     * @throws IOException .
-//     */
-//    public void add(ApiFetcher api, String leagueCode, Season inauguralSeason) throws IOException {
-//        MatchList ml = api.fetchAllGames(inauguralSeason, leagueCode);
-//        this.add(ml);
-//    }
-
+    
     /**
      * converts string to valid data and adds to the database.
      * @param s the data.
