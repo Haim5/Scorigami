@@ -188,6 +188,10 @@ public class StatsMaker {
         return this.sm.getScoreSet().size();
     }
 
+     /**
+     * get the biggest number of points ever scored by one team in a game.
+     * @return biggest score.
+     */
     public int mostPointsByTeam() {
         List<Score> l = sm.getScoreList();
         int max = 0;
