@@ -33,7 +33,7 @@ The data dates back to each league's inaugural season.
 The Six Nations data dates all the way back to December 1882, it starts from the days of the Home Nations to Five Nations and then to Six Nations, and hopefully sooner rather than later a [Seven Nation Army](https://www.youtube.com/watch?v=0J2QdDbelmY). Not only the name, the format and the participants have changed since the early days, but also the scoring code of rugby has changed several times, meaning some of the scores in the database are impossible to reprise under today's rules.
 
 ## Packages used
-   *[twitter4j](https://twitter4j.org/en/index.html)
+   * [twitter4j](https://twitter4j.org/en/index.html)
  
 ## Languages
    * Java
