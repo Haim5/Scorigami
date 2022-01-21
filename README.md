@@ -11,7 +11,7 @@ The bot fetches the latest score from an [online sports database](https://www.th
 ## Where can I follow the bot?
 [Everything you need is here.](https://linktr.ee/Scorigami)
 
-## What leagues are supported?
+## Which leagues are supported?
 Currently the bot tracks [MLR](https://en.wikipedia.org/wiki/Major_League_Rugby) and [Six Nations](https://en.wikipedia.org/wiki/Six_Nations_Championship) scores. However, the code itself is not limited to a specific league. Given the data, it can support every rugby union competition.
 
 ## How far back does the data go?
@@ -31,7 +31,7 @@ While recent data is available at [TheSportsDB](https://www.thesportsdb.com/), f
   Only a few seasons of data were available at [TheSportsDB.](https://www.thesportsdb.com/) The rest is from Wikipedia. 
 
 ## Note
-The Six Nations data dates all the way back to December 1882. it starts from the days of the Home Nations to Five Nations and then to Six Nations, and hopefully sooner rather than later a [Seven Nation Army](https://www.youtube.com/watch?v=0J2QdDbelmY). Not only the name, the format and the participants have changed since the early days, but also the scoring code of rugby has changed several times, meaning some of the scores in the database are impossible to reprise under today's rules.
+The Six Nations data dates all the way back to December 1882. It starts from the days of the Home Nations to the Five Nations, then to the Six Nations, and hopefully sooner rather than later a [Seven Nation Army](https://www.youtube.com/watch?v=0J2QdDbelmY). Not only the name, the format and the participants have changed since the early days, but also the scoring code of rugby has changed several times, meaning some of the scores in the database are impossible to reprise under today's rules.
 
 ## Packages used
    * [twitter4j](https://twitter4j.org/en/index.html)
