@@ -24,11 +24,11 @@ public class Team {
      * @return Team.
      */
     public static Team makeIfAbsent(String name) {
-        // case - if the team exists already.
+        // case - if the team already exists.
         if (teams.containsKey(name)) {
             return teams.get(name);
         }
-        // if the teams does not exist.
+        // if the team does not exist.
         Team t = new Team(name);
         teams.put(name, t);
         return t;
