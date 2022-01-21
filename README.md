@@ -36,9 +36,9 @@ The Six Nations data dates all the way back to December 1882, it starts from the
    *[twitter4j](https://twitter4j.org/en/index.html)
  
 ## Languages
-   *Java
+   * Java
    
 ## API used
-   *Twitter
-   *[TheSportsDB](https://www.thesportsdb.com/)
+   * Twitter
+   * [TheSportsDB](https://www.thesportsdb.com/)
 
