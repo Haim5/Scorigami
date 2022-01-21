@@ -16,16 +16,16 @@ Currently the bot tracks [MLR](https://en.wikipedia.org/wiki/Major_League_Rugby)
 
 ## How far back does the data go?
 The data dates back to each league's inaugural season.
-* ### MLR - April 2017.
-* ### Six Nations - December 1882.
+* ### MLR ### - April 2017.
+* ### Six Nations ### - December 1882.
 
 ## What is the source of the data?
 
-### MLR
-All the data was available at [TheSportsDB.](https://www.thesportsdb.com/)
+* ### MLR
+  All the data was available at [TheSportsDB.](https://www.thesportsdb.com/)
 
-### Six Nations
-Only a few seasons of data were available at [TheSportsDB.](https://www.thesportsdb.com/), the rest is from Wikipedia.
+* ### Six Nations
+  Only a few seasons of data were available at [TheSportsDB.](https://www.thesportsdb.com/), the rest is from Wikipedia.
 
 ## Note
 The Six Nations data dates all the way back to December 1882, it starts from the days of the Home Nations to Five Nations and then to Six Nations, and hopefully sooner rather than later a [Seven Nation Army](https://www.youtube.com/watch?v=0J2QdDbelmY). Not only the name, the format and the participants have changed since the early days, but also the scoring code of rugby has changed several times, meaning some of the scores in the database are impossible to reprise under today's rules.
