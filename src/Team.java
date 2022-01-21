@@ -8,7 +8,6 @@ import java.util.Objects;
  */
 public class Team {
     private final String name;
-//    private final MatchList ml = new MatchList();
     private static final Map<String, Team> teams = new HashMap<>();
 
     /**
