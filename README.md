@@ -22,6 +22,7 @@ The data dates back to each league's inaugural season.
   December 1882.
 
 ## What is the source of the data?
+While recent data is available at [TheSportsDB](https://www.thesportsdb.com/), finding and converting data from past centuries, in a very fitting fashion for a sport that has only turned pro in 1995, was tricky.   
 
 * #### MLR
   All the data was available at [TheSportsDB.](https://www.thesportsdb.com/)
@@ -30,7 +31,7 @@ The data dates back to each league's inaugural season.
   Only a few seasons of data were available at [TheSportsDB.](https://www.thesportsdb.com/) The rest is from Wikipedia. 
 
 ## Note
-The Six Nations data dates all the way back to December 1882, it starts from the days of the Home Nations to Five Nations and then to Six Nations, and hopefully sooner rather than later a [Seven Nation Army](https://www.youtube.com/watch?v=0J2QdDbelmY). Not only the name, the format and the participants have changed since the early days, but also the scoring code of rugby has changed several times, meaning some of the scores in the database are impossible to reprise under today's rules.
+The Six Nations data dates all the way back to December 1882. it starts from the days of the Home Nations to Five Nations and then to Six Nations, and hopefully sooner rather than later a [Seven Nation Army](https://www.youtube.com/watch?v=0J2QdDbelmY). Not only the name, the format and the participants have changed since the early days, but also the scoring code of rugby has changed several times, meaning some of the scores in the database are impossible to reprise under today's rules.
 
 ## Packages used
    * [twitter4j](https://twitter4j.org/en/index.html)
