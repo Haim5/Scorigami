@@ -2,7 +2,7 @@
 This project is a rugby scorigami bot.
 
 ## What is a scorigami?
-Coined by [Jon Bois](https://en.wikipedia.org/wiki/Jon_Bois), scorigami is a scoring combination that has never happened before in a sport or league's history. The term usually refers to american football scores, and NFL scores in particular. This project introduces the concept to the great ancestor of american football - Rugby union.
+Coined by [Jon Bois](https://en.wikipedia.org/wiki/Jon_Bois), scorigami is a scoring combination that has never happened before in a sport or league's history. The term usually refers to american football scores and NFL scores in particular. This project introduces the concept to the great ancestor of american football - Rugby union.
 You can learn more about scorigami [here](https://en.wikipedia.org/wiki/Scorigami) and [there](https://www.youtube.com/watch?v=9l5C8cGMueY).
 
 ## What does the bot do?
