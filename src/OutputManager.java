@@ -1,12 +1,10 @@
 import twitter4j.TwitterException;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -63,33 +61,33 @@ public class OutputManager {
     }
 
     /**
-     * update the database and tweet.
+     * updates the database and tweets.
+     * @param testMode true - work in test mode. false - tweet.
      * @throws IOException .
      * @throws TwitterException .
      */
     public void update(boolean testMode) throws IOException, TwitterException {
         MatchList newMatches = new MatchList();
+        // check if the database is updated.
         if (!this.isUpdated()) {
             MatchList ml = this.api.last15(this.leagueCode);
             while (!ml.isEmpty()) {
                 Match m = ml.getFirst();
+                // check if the match is already in the database.
                 if (!this.sm.isMatchInMap(m)) {
                     String end;
-                    if (this.stat.isScorigami(m.getScore())) {
+                    boolean isScorigami = this.stat.isScorigami(m.getScore());
+                    if (isScorigami) {
                         end = this.scorigamiMessage();
                     } else {
                         end = this.noScorigamiMessage(m.getScore());
                     }
+                    // add the match to the databases.
                     this.sm.add(m);
                     newMatches.add(m);
-                    this.stat.add();
-                    if (testMode) {
-                        System.out.print("#" + this.stat.getNumberOfGames()
-                                + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
-                    } else {
-                        this.tweeter.Tweet("#" + this.stat.getNumberOfGames()
-                                + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
-                    }
+                    this.stat.add(isScorigami);
+                    this.tweeter.Tweet("#" + this.stat.getNumberOfGames() 
+                                       + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
                 }
                 ml.removeFirst();
             }
@@ -177,22 +175,4 @@ public class OutputManager {
                 + ld.getMonth().toString().substring(1).toLowerCase() + " " + ld.getDayOfMonth() + suffix + ", "
                 + ld.getYear() + ".\n\n" + closestScorigamiText(s);
     }
-
-    /**
-     * Print the database.
-     */
-    public void print() {
-        int limit = stat.mostPointsByTeam() + 5;
-        for (int i = 0; i <= limit; i++) {
-            for (int j = 0; j <= limit; j++) {
-                if (j < i) {
-                    System.out.print("X ");
-                } else {
-                    System.out.print(stat.numberOfOccasionsByScore(new Score(i, j)) + " ");
-                }
-            }
-            System.out.print("\n");
-        }
-    }
-
 }
