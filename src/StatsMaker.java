@@ -190,12 +190,4 @@ public class StatsMaker {
     public int numberOfScores() {
         return diffScores;
     }
-
-    /**
-     * helper method, gets the number of unique scores that have ever happened. used to reduce complexity.
-     * @return number of unique scores.
-     */
-    private int numberOfScoresHelper() {
-        return this.sm.getScoreSet().size();
-    }
 }
