@@ -53,9 +53,11 @@ public class StatsMaker {
         final int home = s.getHomeScore(), away = s.getAwayScore(), sum = home + away;
         Score answer = null;
         for (int i = away, h = 0; h <= minimalMargin; i++, h++) {
-            for (int j = home, k = h; k <= minimalMargin; j++, k++) {
+            if (!s.isValidDistance(new Score(home, i))) {
+                continue;
+            }
+            for (int j = home, currMargin = h; currMargin <= minimalMargin; j++, currMargin++) {
                 Score temp = new Score(j, i);
-                int currMargin = i + j - sum;
                 if (currMargin < minimalMargin && s.isValidDistance(temp) && isScorigami(temp)) {
                     answer = temp;
                     minimalMargin = currMargin;
@@ -88,16 +90,15 @@ public class StatsMaker {
                 continue;
             }
             int awayPM = PML.get(h);
-            // j - home team score, k - total margin (i + j - home - away).
-            for (int j = home, k = h; k <= maxMargin; j++, k++) {
+            // j - home team score, currentPointMargin - total margin (i + j - home - away).
+            for (int j = home, currentPointMargin = h; currentPointMargin <= maxMargin; j++, currentPointMargin++) {
                 Score temp = new Score(j, i);
                 // update PML.
-                possessionMarginListUpdate(k - h);
+                possessionMarginListUpdate(currentPointMargin - h);
                 // check score validity and if the score is a scorigami.
                 if (s.isValidDistance(temp) && isScorigami(temp)) {
                     // set values
-                    int currentPossMargin = awayPM + PML.get(k - h);
-                    int currentPointMargin = i + j - sum;
+                    int currentPossMargin = awayPM + PML.get(currentPointMargin - h);
                     if (currentPossMargin < minimalPoss) {
                         answer = temp;
                         minimalMargin = currentPointMargin;
