@@ -50,7 +50,7 @@ public class StatsMaker {
         // set minimalMargin to max value.
         int minimalMargin = Integer.MAX_VALUE;
         // initialise constant variables.
-        final int home = s.getHomeScore(), away = s.getAwayScore(), sum = home + away;
+        final int home = s.getHomeScore(), away = s.getAwayScore();
         Score answer = null;
         for (int i = away, h = 0; h <= minimalMargin; i++, h++) {
             if (!s.isValidDistance(new Score(home, i))) {
@@ -81,7 +81,7 @@ public class StatsMaker {
         // initialise minimalPoss, minimalMargin and maxMargin to the max value.
         int minimalPoss = Integer.MAX_VALUE, minimalMargin = Integer.MAX_VALUE, maxMargin = Integer.MAX_VALUE;
         // initialise constant variables.
-        final int home = s.getHomeScore(), away = s.getAwayScore(), sum = home + away;
+        final int home = s.getHomeScore(), away = s.getAwayScore();
         Score answer = null;
         // i - away team score, h - margin from original away score (i - away).
         for (int i = away, h = 0; h <= maxMargin; i++, h++) {
