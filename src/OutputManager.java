@@ -5,7 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * output manager class.
@@ -71,6 +73,7 @@ public class OutputManager {
         // check if the database is updated.
         if (!this.isUpdated()) {
             MatchList ml = this.api.last15(this.leagueCode);
+            Map<String, InfoHandler> map = getHandlers();
             while (!ml.isEmpty()) {
                 Match m = ml.getFirst();
                 // check if the match is already in the database.
@@ -80,14 +83,19 @@ public class OutputManager {
                     if (isScorigami) {
                         end = this.scorigamiMessage();
                     } else {
-                        end = this.noScorigamiMessage(m.getScore());
+                        end = this.noScorigamiMessage(m.getScore(), map);
                     }
                     // add the match to the databases.
                     this.sm.add(m);
                     newMatches.add(m);
                     this.stat.add(isScorigami);
-                    this.tweeter.Tweet("#" + this.stat.getNumberOfGames() 
-                                       + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
+                    if (testMode) {
+                        System.out.print("#" + this.stat.getNumberOfGames()
+                                + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
+                    } else {
+                        this.tweeter.Tweet("#" + this.stat.getNumberOfGames()
+                                + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
+                    }
                 }
                 ml.removeFirst();
             }
@@ -114,15 +122,26 @@ public class OutputManager {
         fw.write(output);
         fw.close();
     }
-
+    
+    /**
+     * make handlers map
+     * @return map.
+     */
+    private Map<String, InfoHandler> getHandlers() {
+        Map<String, InfoHandler> m = new HashMap<>();
+        m.put("pts", new PtsScoreInfoHandler());
+        m.put("poss", new PossScoreInfoHandler());
+        return m;
+    }
+    
     /**
      * helper method, makes the tweet's text.
      * @param s the score.
      * @return string.
      */
-    private String closestScorigamiText(Score s) {
-        Score byPoints = this.stat.closestScorigamiByPoints(s);
-        Score byPoss = this.stat.closestScorigamiByPossessions(s);
+    private String closestScorigamiText(Score s, Map<String, InfoHandler> m) {
+        Score byPoints = this.stat.getClose(s, m.get("pts"));
+        Score byPoss = this.stat.getClose(s, m.get("poss"));
         if (byPoints.equals(byPoss)) {
             return "Closest Scorigami: " + byPoints + ".";
         }
@@ -161,7 +180,7 @@ public class OutputManager {
      * @param s the score.
      * @return string.
      */
-    private String noScorigamiMessage(Score s) {
+    private String noScorigamiMessage(Score s, Map<String, InfoHandler> m) {
         int num = this.stat.numberOfOccasionsByScore(s);
         String times;
         if (num == 1) {
@@ -173,6 +192,6 @@ public class OutputManager {
         String suffix = this.getSuffix(ld.getDayOfMonth());
         return  "No Scorigami, this score has happened " + num + times + ld.getMonth().toString().charAt(0)
                 + ld.getMonth().toString().substring(1).toLowerCase() + " " + ld.getDayOfMonth() + suffix + ", "
-                + ld.getYear() + ".\n\n" + closestScorigamiText(s);
+                + ld.getYear() + ".\n\n" + closestScorigamiText(s, m);
     }
 }
