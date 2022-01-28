@@ -67,4 +67,13 @@ public class Score {
     public String toString() {
         return this.homeScore + ":" + this.awayScore;
     }
+    
+    /**
+     * returns the total points margin between two scores.
+     * @param other the score we compare with.
+     * @return int.
+     */
+    public int distanceByPoints(Score other) {
+        return (Math.abs(this.homeScore - other.getHomeScore()) + Math.abs(this.awayScore - other.getAwayScore()));
+    }
 }
