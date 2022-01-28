@@ -1,6 +1,4 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,10 +8,6 @@ public class StatsMaker {
     private final ScorigamiMap sm;
     private int games;
     private int diffScores;
-    // Possession Margin List. PL[i] = minimal number of possessions needed to gain i points.
-    private final ArrayList<Integer> PML;
-    // FG: field goal (3 points), UTRY: unconverted try (5 points), CTRY: converted try (7 points).
-    private final static int FG = 3, UTRY = 5, CTRY = 7;
 
     /**
      * Constructor.
@@ -23,8 +17,6 @@ public class StatsMaker {
         this.sm = sm;
         this.games = this.numberOfGames();
         this.diffScores = numberOfScoresHelper();
-        // initialise base values [0-7]
-        PML = new ArrayList<>(Arrays.asList(0, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, 2, 1));
     }
 
     /**
@@ -36,94 +28,32 @@ public class StatsMaker {
         MatchList ml = this.sm.getMatchListByScore(s);
         return (ml == null || ml.isEmpty());
     }
-
+    
     /**
-     * get the closest scorigami score, closest by total points.
-     * @param s the score we start from.
-     * @return the closest scorigami by points.
+     * get the closest scorigami score by the infoHandler definition of "Closest".
+     * @param s the original score.
+     * @param sih InfoHandler.
+     * @return score.
      */
-    public Score closestScorigamiByPoints(Score s) {
-        // edge case - the score is a scorigami - return the score.
+    public Score getClose(Score s, InfoHandler sih) {
+        // edge case - the score is a scorigami (distance = 0)
         if (isScorigami(s)) {
             return s;
         }
-        // set minimalMargin to max value.
-        int minimalMargin = Integer.MAX_VALUE;
-        // initialise constant variables.
-        final int home = s.getHomeScore(), away = s.getAwayScore();
-        Score answer = null;
-        for (int i = away, h = 0; h <= minimalMargin; i++, h++) {
-            if (!s.isValidDistance(new Score(home, i))) {
+        ScoreInfo curr = new ScoreInfo();
+        int home = s.getHomeScore(), away = s.getAwayScore();
+        for (int i = away, h = 0; sih.shouldRun(h); i++, h++) {
+            if (sih.shouldContinue(h)) {
                 continue;
             }
-            for (int j = home, currMargin = h; currMargin <= minimalMargin; j++, currMargin++) {
-                Score temp = new Score(j, i);
-                if (currMargin < minimalMargin && s.isValidDistance(temp) && isScorigami(temp)) {
-                    answer = temp;
-                    minimalMargin = currMargin;
+            for (int j = home, cpm = h; sih.shouldRun(cpm); j++, cpm++) {
+                sih.setValues(curr, s, new Score(j, i));
+                if (s.isValidDistance(curr.score) && isScorigami(curr.score)) {
+                    sih.handle(curr);
                 }
             }
         }
-        return answer;
-    }
-
-
-    /**
-     * get the closest scorigami score, closest by possessions.
-     * @param s the score we start from.
-     * @return the closest scorigami by possessions.
-     */
-    public Score closestScorigamiByPossessions(Score s) {
-        // edge case - the score is scorigami - return the score.
-        if (isScorigami(s)) {
-            return s;
-        }
-        // initialise minimalPoss, minimalMargin and maxMargin to the max value.
-        int minimalPoss = Integer.MAX_VALUE, minimalMargin = Integer.MAX_VALUE, maxMargin = Integer.MAX_VALUE;
-        // initialise constant variables.
-        final int home = s.getHomeScore(), away = s.getAwayScore();
-        Score answer = null;
-        // i - away team score, h - margin from original away score (i - away).
-        for (int i = away, h = 0; h <= maxMargin; i++, h++) {
-            // check if h is a valid margin by comparing (h:0) with (0:0).
-            if (!s.isValidDistance(new Score(home, i))) {
-                continue;
-            }
-            int awayPM = PML.get(h);
-            // j - home team score, currentPointMargin - total margin (i + j - home - away).
-            for (int j = home, currentPointMargin = h; currentPointMargin <= maxMargin; j++, currentPointMargin++) {
-                Score temp = new Score(j, i);
-                // update PML.
-                possessionMarginListUpdate(currentPointMargin - h);
-                // check score validity and if the score is a scorigami.
-                if (s.isValidDistance(temp) && isScorigami(temp)) {
-                    // set values
-                    int currentPossMargin = awayPM + PML.get(currentPointMargin - h);
-                    if (currentPossMargin < minimalPoss) {
-                        answer = temp;
-                        minimalMargin = currentPointMargin;
-                        minimalPoss = currentPossMargin;
-                        maxMargin = CTRY * minimalPoss;
-                    } else if (currentPossMargin == minimalPoss && currentPointMargin < minimalMargin) {
-                        answer = temp;
-                        minimalMargin = currentPointMargin;
-                    }
-                }
-            }
-        }
-        return answer;
-    }
-
-    /**
-     * update PML if needed.
-     * @param m the current index.
-     */
-    private void possessionMarginListUpdate(int m) {
-        // if index m is not in the array, add it.
-        if (m >= PML.size()) {
-            // dynamic programming - get the distance using previous solutions.
-            PML.add(m, 1 + Math.min(Math.min(PML.get(m - FG), PML.get(m - UTRY)), PML.get(m - CTRY)));
-        }
+        return sih.answer();
     }
 
     /**
