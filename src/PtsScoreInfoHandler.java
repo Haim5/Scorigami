@@ -1,16 +1,21 @@
 public class PtsScoreInfoHandler extends InfoHandler {
+
+    PtsScoreInfoHandler() {
+        this.description = "By points: ";
+    }
+
     @Override
-    public void handle(ScoreInfo curr) {
+    public void handle() {
         if (curr.ptsMargin < this.minPts) {
-            this.ans = curr.score;
-            this.minPts = curr.ptsMargin;
+            this.ans = this.curr.score;
+            this.minPts = this.curr.ptsMargin;
             this.limit = this.minPts;
         }
     }
 
     @Override
-    public void setValues(ScoreInfo curr, Score og, Score temp) {
-        curr.score = temp;
-        curr.ptsMargin = og.distanceByPoints(temp);
+    public void setValues(Score og, Score temp) {
+        this.curr.score = temp;
+        this.curr.ptsMargin = og.distanceByPoints(temp);
     }
 }
