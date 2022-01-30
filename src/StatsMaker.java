@@ -16,7 +16,7 @@ public class StatsMaker {
     StatsMaker(ScorigamiMap sm) {
         this.sm = sm;
         this.games = this.numberOfGames();
-        this.diffScores = numberOfScoresHelper();
+        this.diffScores = this.sm.getScoreSet().size();
     }
 
     /**
