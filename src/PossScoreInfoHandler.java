@@ -8,25 +8,29 @@ public class PossScoreInfoHandler extends InfoHandler {
     private final ArrayList<Integer> PML = new ArrayList<>(Arrays.asList(0, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, 2, 1));
     private int minPoss = Integer.MAX_VALUE;
 
+    PossScoreInfoHandler() {
+        this.description = "By possessions: ";
+    }
+
     @Override
-    public void handle(ScoreInfo curr) {
+    public void handle() {
         if (curr.possMargin < this.minPoss) {
-            this.ans = curr.score;
-            this.minPoss = curr.possMargin;
-            this.minPts = curr.ptsMargin;
-            this.limit = CTRY * curr.possMargin;
-        } else if (curr.possMargin == this.minPoss && curr.ptsMargin < this.minPts) {
-            this.ans = curr.score;
-            this.minPts = curr.ptsMargin;
+            this.ans = this.curr.score;
+            this.minPoss = this.curr.possMargin;
+            this.minPts = this.curr.ptsMargin;
+            this.limit = CTRY * this.curr.possMargin;
+        } else if (this.curr.possMargin == this.minPoss && this.curr.ptsMargin < this.minPts) {
+            this.ans = this.curr.score;
+            this.minPts = this.curr.ptsMargin;
         }
     }
 
     @Override
-    public void setValues(ScoreInfo curr, Score og, Score temp) {
-        curr.score = temp;
-        curr.ptsMargin = og.distanceByPoints(temp);
+    public void setValues(Score og, Score temp) {
+        this.curr.score = temp;
+        this.curr.ptsMargin = og.distanceByPoints(temp);
         extendPML(index(og, temp));
-        curr.possMargin = calcMinPoss(og, temp);
+        this.curr.possMargin = calcMinPoss(og, temp);
     }
 
 
@@ -36,6 +40,7 @@ public class PossScoreInfoHandler extends InfoHandler {
         minPts = Integer.MAX_VALUE;
         ans = null;
         this.minPoss = Integer.MAX_VALUE;
+        this.curr.reset();
     }
 
     /**
