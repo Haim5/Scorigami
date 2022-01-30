@@ -32,8 +32,10 @@ public class PossScoreInfoHandler extends InfoHandler {
     public void setValues(Score og, Score temp) {
         this.curr.score = temp;
         this.curr.ptsMargin = og.distanceByPoints(temp);
-        extendPML(index(og, temp));
-        this.curr.possMargin = calcMinPoss(og, temp);
+        int v1 = Math.abs(og.getHomeScore() - temp.getHomeScore());
+        int v2 = Math.abs(og.getAwayScore() - temp.getAwayScore());
+        extendPML(Math.max(v1, v2));
+        this.curr.possMargin = PML.get(v1) + PML.get(v2);
     }
 
 
@@ -41,17 +43,6 @@ public class PossScoreInfoHandler extends InfoHandler {
     protected void reset() {
         super.reset();
         this.minPoss = Integer.MAX_VALUE;
-    }
-
-    /**
-     * calculate the index.
-     * @param og original score.
-     * @param temp current score.
-     * @return int.
-     */
-    private int index(Score og, Score temp) {
-        return Math.max(Math.abs(og.getHomeScore() - temp.getHomeScore()),
-                Math.abs(og.getAwayScore() - temp.getAwayScore()));
     }
 
     /**
@@ -64,17 +55,5 @@ public class PossScoreInfoHandler extends InfoHandler {
             int val = 1 + Math.min(Math.min(PML.get(index - FG), PML.get(index - UTRY)), PML.get(index - CTRY));
             PML.add(index, val);
         }
-    }
-
-    /**
-     * calculate the minimal possessions distance.
-     * @param og original score.
-     * @param temp target score.
-     * @return int.
-     */
-    private int calcMinPoss(Score og, Score temp) {
-        int v1 = Math.abs(og.getHomeScore() - temp.getHomeScore());
-        int v2 = Math.abs(og.getAwayScore() - temp.getAwayScore());
-        return PML.get(v1) + PML.get(v2);
     }
 }
