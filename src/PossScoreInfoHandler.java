@@ -8,6 +8,9 @@ public class PossScoreInfoHandler extends InfoHandler {
     private final ArrayList<Integer> PML = new ArrayList<>(Arrays.asList(0, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, 2, 1));
     private int minPoss = Integer.MAX_VALUE;
 
+    /**
+     * constructor, sets the description.
+     */
     PossScoreInfoHandler() {
         this.description = "By possessions: ";
     }
@@ -35,7 +38,7 @@ public class PossScoreInfoHandler extends InfoHandler {
 
 
     @Override
-    public void reset() {
+    protected void reset() {
         limit = Integer.MAX_VALUE;
         minPts = Integer.MAX_VALUE;
         ans = null;
