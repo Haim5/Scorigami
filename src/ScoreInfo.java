@@ -14,4 +14,13 @@ public class ScoreInfo {
         ptsMargin = Integer.MAX_VALUE;
         score = null;
     }
+
+    /**
+     * reset to default values.
+     */
+    public void reset() {
+        possMargin = Integer.MAX_VALUE;
+        ptsMargin = Integer.MAX_VALUE;
+        score = null;
+    }
 }
