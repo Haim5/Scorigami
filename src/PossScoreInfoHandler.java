@@ -39,11 +39,8 @@ public class PossScoreInfoHandler extends InfoHandler {
 
     @Override
     protected void reset() {
-        limit = Integer.MAX_VALUE;
-        minPts = Integer.MAX_VALUE;
-        ans = null;
+        super.reset();
         this.minPoss = Integer.MAX_VALUE;
-        this.curr.reset();
     }
 
     /**
@@ -79,12 +76,5 @@ public class PossScoreInfoHandler extends InfoHandler {
         int v1 = Math.abs(og.getHomeScore() - temp.getHomeScore());
         int v2 = Math.abs(og.getAwayScore() - temp.getAwayScore());
         return PML.get(v1) + PML.get(v2);
-    }
-
-    @Override
-    public Score answer() {
-        Score s = this.ans;
-        this.reset();
-        return s;
     }
 }
