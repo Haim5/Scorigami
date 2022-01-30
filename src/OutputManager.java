@@ -5,9 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * output manager class.
@@ -73,7 +72,7 @@ public class OutputManager {
         // check if the database is updated.
         if (!this.isUpdated()) {
             MatchList ml = this.api.last15(this.leagueCode);
-            Map<String, InfoHandler> map = getHandlers();
+            List<InfoHandler> list = getHandlers();
             while (!ml.isEmpty()) {
                 Match m = ml.getFirst();
                 // check if the match is already in the database.
@@ -83,7 +82,7 @@ public class OutputManager {
                     if (isScorigami) {
                         end = this.scorigamiMessage();
                     } else {
-                        end = this.noScorigamiMessage(m.getScore(), map);
+                        end = this.noScorigamiMessage(m.getScore(), list);
                     }
                     // add the match to the databases.
                     this.sm.add(m);
@@ -101,6 +100,17 @@ public class OutputManager {
             }
             this.addNewDataToFile(newMatches);
         }
+    }
+
+    /**
+     * make handlers list
+     * @return list.
+     */
+    private List<InfoHandler> getHandlers() {
+        ArrayList<InfoHandler> m = new ArrayList<>();
+        m.add(new PtsScoreInfoHandler());
+        m.add(new PossScoreInfoHandler());
+        return m;
     }
 
     /**
@@ -122,30 +132,50 @@ public class OutputManager {
         fw.write(output);
         fw.close();
     }
-    
-    /**
-     * make handlers map
-     * @return map.
-     */
-    private Map<String, InfoHandler> getHandlers() {
-        Map<String, InfoHandler> m = new HashMap<>();
-        m.put("pts", new PtsScoreInfoHandler());
-        m.put("poss", new PossScoreInfoHandler());
-        return m;
-    }
-    
+
     /**
      * helper method, makes the tweet's text.
      * @param s the score.
      * @return string.
      */
-    private String closestScorigamiText(Score s, Map<String, InfoHandler> m) {
-        Score byPoints = this.stat.getClose(s, m.get("pts"));
-        Score byPoss = this.stat.getClose(s, m.get("poss"));
-        if (byPoints.equals(byPoss)) {
-            return "Closest Scorigami: " + byPoints + ".";
+    private String closestScorigamiText(Score s, List<InfoHandler> list) {
+        int size = list.size();
+        Score[] scoreArr = new Score[size];
+        int i = 0;
+        for (InfoHandler ih : list) {
+            this.stat.getClose(s, ih);
+            scoreArr[i] = ih.answer();
+            i++;
         }
-        return "Closest Scorigami:\n\nBy Points: " + byPoints + ".\n\n" + "By Possessions: " + byPoss + ".";
+        if (areAllScoresEqual(scoreArr, size)) {
+            return "Closest Scorigami: " + scoreArr[0] + ".";
+        }
+        i = 0;
+        String txt = "Closest Scorigami:\n\n";
+        for (InfoHandler ih : list) {
+            txt = txt.concat(ih.getDescription() + scoreArr[i] + ".");
+            if (i != size - 1) {
+                txt = txt.concat("\n\n");
+            }
+            i++;
+        }
+        return txt;
+    }
+
+    /**
+     * compares an array of scores.
+     * @param arr the array of scores
+     * @param size the array size.
+     * @return if all scores are equal - true, otherwise - false.
+     */
+    private boolean areAllScoresEqual(Score[] arr, int size) {
+        Score t = arr[0];
+        for (int i = 1; i < size; i++) {
+            if (!t.equals(arr[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -180,7 +210,7 @@ public class OutputManager {
      * @param s the score.
      * @return string.
      */
-    private String noScorigamiMessage(Score s, Map<String, InfoHandler> m) {
+    private String noScorigamiMessage(Score s, List<InfoHandler> list) {
         int num = this.stat.numberOfOccasionsByScore(s);
         String times;
         if (num == 1) {
@@ -192,6 +222,6 @@ public class OutputManager {
         String suffix = this.getSuffix(ld.getDayOfMonth());
         return  "No Scorigami, this score has happened " + num + times + ld.getMonth().toString().charAt(0)
                 + ld.getMonth().toString().substring(1).toLowerCase() + " " + ld.getDayOfMonth() + suffix + ", "
-                + ld.getYear() + ".\n\n" + closestScorigamiText(s, m);
+                + ld.getYear() + ".\n\n" + closestScorigamiText(s, list);
     }
 }
