@@ -36,10 +36,6 @@ public class StatsMaker {
      * @return score.
      */
     public void getClose(Score s, InfoHandler sih) {
-        // edge case - the score is a scorigami (distance = 0)
-        if (isScorigami(s)) {
-            return;
-        }
         int home = s.getHomeScore(), away = s.getAwayScore();
         for (int i = away, h = 0; sih.shouldRun(h); i++, h++) {
             if (sih.shouldContinue(h)) {
