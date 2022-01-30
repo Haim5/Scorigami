@@ -35,25 +35,23 @@ public class StatsMaker {
      * @param sih InfoHandler.
      * @return score.
      */
-    public Score getClose(Score s, InfoHandler sih) {
+    public void getClose(Score s, InfoHandler sih) {
         // edge case - the score is a scorigami (distance = 0)
         if (isScorigami(s)) {
-            return s;
+            return;
         }
-        ScoreInfo curr = new ScoreInfo();
         int home = s.getHomeScore(), away = s.getAwayScore();
         for (int i = away, h = 0; sih.shouldRun(h); i++, h++) {
             if (sih.shouldContinue(h)) {
                 continue;
             }
             for (int j = home, cpm = h; sih.shouldRun(cpm); j++, cpm++) {
-                sih.setValues(curr, s, new Score(j, i));
-                if (s.isValidDistance(curr.score) && isScorigami(curr.score)) {
-                    sih.handle(curr);
+                sih.setValues(s, new Score(j, i));
+                if (s.isValidDistance(sih.getCurrentScore()) && isScorigami(sih.getCurrentScore())) {
+                    sih.handle();
                 }
             }
         }
-        return sih.answer();
     }
 
     /**
