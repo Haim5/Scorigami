@@ -1,5 +1,8 @@
 public class PtsScoreInfoHandler extends InfoHandler {
 
+    /**
+     * constructor, sets the description.
+     */
     PtsScoreInfoHandler() {
         this.description = "By points: ";
     }
