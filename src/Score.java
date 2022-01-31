@@ -55,19 +55,6 @@ public class Score {
     }
 
     /**
-     * get the score with the winning score first.
-     * @return score.
-     */
-    public Score getWinningFirst() {
-        return new Score(this.max(), this.min());
-    }
-
-    @Override
-    public String toString() {
-        return this.homeScore + ":" + this.awayScore;
-    }
-    
-    /**
      * returns the total points margin between two scores.
      * @param other the score we compare with.
      * @return int.
@@ -75,23 +62,7 @@ public class Score {
     public int distanceByPoints(Score other) {
         return (Math.abs(this.homeScore - other.getHomeScore()) + Math.abs(this.awayScore - other.getAwayScore()));
     }
-    
-    /**
-     * get the higher score.
-     * @return int.
-     */
-    public int max() {
-        return Math.max(homeScore, awayScore);
-    }
 
-    /**
-     * get the lower score.
-     * @return int.
-     */
-    public int min() {
-        return Math.min(homeScore, awayScore);
-    }
-    
     /**
      * check if the margin between the two scores is valid in rugby.
      * @param other the second score.
@@ -102,4 +73,21 @@ public class Score {
         int am = Math.abs(other.getAwayScore() - this.awayScore);
         return !(hm == 1 || hm == 2 || hm == 4 || am == 1 || am == 2 || am == 4);
     }
+
+    @Override
+    public String toString() {
+        return this.homeScore + ":" + this.awayScore;
+    }
+
+    /**
+     * get the score with the winning score first.
+     * @return score.
+     */
+    public Score getWinningFirst() {
+        if (this.homeScore >= this.awayScore) {
+            return this;
+        }
+        return new Score(this.awayScore, this.homeScore);
+    }
 }
+
