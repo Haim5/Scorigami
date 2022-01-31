@@ -33,7 +33,6 @@ public class StatsMaker {
      * get the closest scorigami score by the infoHandler definition of "Closest".
      * @param s the original score.
      * @param sih InfoHandler.
-     * @return score.
      */
     public void getClose(Score s, InfoHandler sih) {
         int home = s.getHomeScore(), away = s.getAwayScore();
