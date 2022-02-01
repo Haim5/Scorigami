@@ -15,12 +15,30 @@ abstract public class InfoHandler {
         this.curr.reset();
     }
 
+    /**
+     * get the handler's description
+     * @return string
+     */
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * get the current score. (the score we need to check)
+     * @return Score.
+     */
     public Score getCurrentScore() {
         return curr.score;
+    }
+
+    /**
+     * return the score and reset.
+     * @return Score.
+     */
+    public Score answer() {
+        Score s = this.ans;
+        this.reset();
+        return s;
     }
 
     /**
@@ -37,19 +55,7 @@ abstract public class InfoHandler {
      * @param n the current iteration (margin)
      * @return boolean
      */
-    public boolean shouldContinue(int n) {
-        return (n == 1 || n == 2 || n == 4);
-    }
-
-    /**
-     * return the score and reset.
-     * @return Score.
-     */
-    public Score answer() {
-        Score s = this.ans;
-        this.reset();
-        return s;
-    }
+    abstract boolean shouldContinue(int n);
 
     /**
      * change the values as needed.
