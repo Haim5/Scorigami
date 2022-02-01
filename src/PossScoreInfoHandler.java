@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PossScoreInfoHandler extends InfoHandler {
-    // constant variables. FG - field goal (3 pts), UTRY - unconverted try (5 pts), CTRY - converted try (7 pts).
+    // constant variables.
     private final static int FG = 3, UTRY = 5, CTRY = 7;
-    // Possession Margin List. PML[i] = minimal number of possessions needed to gain i points. [0-7] initialised.
+    // Possession Margin List. PL[i] = minimal number of possessions needed to gain i points. [0-7] initialised.
     private final ArrayList<Integer> PML = new ArrayList<>(Arrays.asList(0, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, 2, 1));
     private int minPoss = Integer.MAX_VALUE;
 
@@ -55,5 +55,11 @@ public class PossScoreInfoHandler extends InfoHandler {
             int val = 1 + Math.min(Math.min(PML.get(index - FG), PML.get(index - UTRY)), PML.get(index - CTRY));
             PML.add(index, val);
         }
+    }
+
+    @Override
+    public boolean shouldContinue(int n) {
+        int v = PML.get(n);
+        return (v == Integer.MAX_VALUE || v > this.limit);
     }
 }
