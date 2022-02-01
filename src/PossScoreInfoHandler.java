@@ -59,7 +59,6 @@ public class PossScoreInfoHandler extends InfoHandler {
 
     @Override
     public boolean shouldContinue(int n) {
-        int v = PML.get(n);
-        return (v == Integer.MAX_VALUE || v > this.limit);
+        return PML.get(n) > this.limit;
     }
 }
