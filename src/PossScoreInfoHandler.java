@@ -4,7 +4,7 @@ import java.util.Arrays;
 public class PossScoreInfoHandler extends InfoHandler {
     // constant variables.
     private final static int FG = 3, UTRY = 5, CTRY = 7;
-    // Possession Margin List. PL[i] = minimal number of possessions needed to gain i points. [0-7] initialised.
+    // Possession Margin List. PML[i] = minimal number of possessions needed to gain i points. [0-7] initialised.
     private final ArrayList<Integer> PML = new ArrayList<>(Arrays.asList(0, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, 2, 1));
     private int minPoss = Integer.MAX_VALUE;
 
@@ -29,13 +29,11 @@ public class PossScoreInfoHandler extends InfoHandler {
     }
 
     @Override
-    public void setValues(Score og, Score temp) {
+    public void setValues(Score temp, int homeMargin, int awayMargin) {
         this.curr.score = temp;
-        this.curr.ptsMargin = og.distanceByPoints(temp);
-        int v1 = Math.abs(og.getHomeScore() - temp.getHomeScore());
-        int v2 = Math.abs(og.getAwayScore() - temp.getAwayScore());
-        extendPML(Math.max(v1, v2));
-        this.curr.possMargin = PML.get(v1) + PML.get(v2);
+        this.curr.ptsMargin = homeMargin + awayMargin;
+        extendPML(Math.max(homeMargin, awayMargin));
+        this.curr.possMargin = PML.get(homeMargin) + PML.get(awayMargin);
     }
 
 
@@ -59,6 +57,8 @@ public class PossScoreInfoHandler extends InfoHandler {
 
     @Override
     public boolean shouldContinue(int n) {
-        return PML.get(n) > this.minPoss;
+        int v = PML.get(n);
+        return v == Integer.MAX_VALUE ||  v > this.minPoss;
     }
 }
+
