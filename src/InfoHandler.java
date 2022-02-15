@@ -64,8 +64,9 @@ abstract public class InfoHandler {
 
     /**
      * set the values of curr.
-     * @param og the original score.
-     * @param temp the current score we compare with.
+     * @param temp the current score we use to measure the distance.
+     * @param homeMargin home team point margin (points to gain in order to get to temp home score)
+     * @param awayMargin away team point margin (points to gain in order to get to temp away score)
      */
-    abstract void setValues(Score og, Score temp);
+    abstract void setValues(Score temp, int homeMargin, int awayMargin);
 }
