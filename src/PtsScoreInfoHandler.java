@@ -17,9 +17,9 @@ public class PtsScoreInfoHandler extends InfoHandler {
     }
 
     @Override
-    public void setValues(Score og, Score temp) {
+    void setValues(Score temp, int homeMargin, int awayMargin) {
         this.curr.score = temp;
-        this.curr.ptsMargin = og.distanceByPoints(temp);
+        this.curr.ptsMargin = homeMargin + awayMargin;
     }
 
     @Override
