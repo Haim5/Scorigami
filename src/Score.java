@@ -54,26 +54,6 @@ public class Score {
         return this.awayScore;
     }
 
-    /**
-     * returns the total points margin between two scores.
-     * @param other the score we compare with.
-     * @return int.
-     */
-    public int distanceByPoints(Score other) {
-        return (Math.abs(this.homeScore - other.getHomeScore()) + Math.abs(this.awayScore - other.getAwayScore()));
-    }
-
-    /**
-     * check if the margin between the two scores is valid in rugby.
-     * @param other the second score.
-     * @return if the margin is valid - true, else - false.
-     */
-    public boolean isValidDistance(Score other) {
-        int hm = Math.abs(other.getHomeScore() - this.homeScore);
-        int am = Math.abs(other.getAwayScore() - this.awayScore);
-        return !(hm == 1 || hm == 2 || hm == 4 || am == 1 || am == 2 || am == 4);
-    }
-
     @Override
     public String toString() {
         return this.homeScore + ":" + this.awayScore;
