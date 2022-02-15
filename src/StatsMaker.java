@@ -40,9 +40,9 @@ public class StatsMaker {
             if (sih.shouldContinue(h)) {
                 continue;
             }
-            for (int j = home, cpm = h; sih.shouldRun(cpm); j++, cpm++) {
-                sih.setValues(s, new Score(j, i));
-                if (s.isValidDistance(sih.getCurrentScore()) && isScorigami(sih.getCurrentScore())) {
+            for (int j = home, k = 0; sih.shouldRun(k + h); j++, k++) {
+                sih.setValues(new Score(j, i), h, k);
+                if (!sih.shouldContinue(k) && isScorigami(sih.getCurrentScore())) {
                     sih.handle();
                 }
             }
