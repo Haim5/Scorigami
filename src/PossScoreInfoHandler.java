@@ -48,10 +48,12 @@ public class PossScoreInfoHandler extends InfoHandler {
      * @param index the index we need to add.
      */
     private void extendPML(int index) {
-        if (index >= PML.size()) {
+        if (index < PML.size()) {
+            return;
+        }
+        for (int i = PML.size(); i <= index; i++) {
             // calculate the new value using the previous results (dynamic programming).
-            int val = 1 + Math.min(Math.min(PML.get(index - FG), PML.get(index - UTRY)), PML.get(index - CTRY));
-            PML.add(index, val);
+            PML.add(i, 1 + Math.min(Math.min(PML.get(i - FG), PML.get(i - UTRY)), PML.get(i - CTRY)));
         }
     }
 
