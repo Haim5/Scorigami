@@ -1,9 +1,9 @@
 import java.util.Objects;
 
 /**
- * Score class.
+ * Score class. Immutable.
  */
-public class Score {
+public final class Score {
     private final int homeScore;
     private final int awayScore;
 
@@ -23,6 +23,7 @@ public class Score {
     Score() {
         this(0, 0);
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -70,4 +71,3 @@ public class Score {
         return new Score(this.awayScore, this.homeScore);
     }
 }
-
