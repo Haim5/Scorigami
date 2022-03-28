@@ -1,18 +1,16 @@
 abstract public class InfoHandler {
     protected int limit = Integer.MAX_VALUE;
-    protected int minPts = Integer.MAX_VALUE;
-    protected Score ans = null;
     protected ScoreInfo curr = new ScoreInfo();
+    protected ScoreInfo answer = new ScoreInfo();
     protected String description;
 
     /**
      * reset the values so we can use the handler again.
      */
-    protected void reset() {
+    private void reset() {
         limit = Integer.MAX_VALUE;
-        minPts = Integer.MAX_VALUE;
-        ans = null;
         this.curr.reset();
+        this.answer.reset();
     }
 
     /**
@@ -36,7 +34,7 @@ abstract public class InfoHandler {
      * @return Score.
      */
     public Score answer() {
-        Score s = this.ans;
+        Score s = this.answer.score;
         this.reset();
         return s;
     }
