@@ -9,17 +9,15 @@ public class PtsScoreInfoHandler extends InfoHandler {
 
     @Override
     public void handle() {
-        if (curr.ptsMargin < this.minPts) {
-            this.ans = this.curr.score;
-            this.minPts = this.curr.ptsMargin;
-            this.limit = this.minPts;
+        if (curr.ptsMargin < answer.ptsMargin) {
+            this.answer = new ScoreInfo(this.curr);
+            this.limit = this.answer.ptsMargin;
         }
     }
 
     @Override
     void setValues(Score temp, int homeMargin, int awayMargin) {
-        this.curr.score = temp;
-        this.curr.ptsMargin = homeMargin + awayMargin;
+        this.curr.setValues(homeMargin + awayMargin, temp);
     }
 
     @Override
