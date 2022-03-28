@@ -26,6 +26,6 @@ public class PossScoreInfoHandler extends InfoHandler {
     @Override
     public boolean shouldContinue(int n) {
         int v = pml.get(n);
-        return (v == Integer.MAX_VALUE ||  v > this.answer.possMargin);
+        return v == Integer.MAX_VALUE ||  v > answer.possMargin || (v == answer.possMargin && n >= answer.ptsMargin);
     }
 }
