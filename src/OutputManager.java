@@ -70,36 +70,37 @@ public class OutputManager {
     public void update(boolean testMode) throws IOException, TwitterException {
         MatchList newMatches = new MatchList();
         // check if the database is updated.
-        if (!this.isUpdated()) {
-            MatchList ml = this.api.last15(this.leagueCode);
-            List<InfoHandler> list = getHandlers();
-            while (!ml.isEmpty()) {
-                Match m = ml.getFirst();
-                // check if the match is already in the database.
-                if (!this.sm.isMatchInMap(m)) {
-                    String end;
-                    boolean isScorigami = this.stat.isScorigami(m.getScore());
-                    if (isScorigami) {
-                        end = this.scorigamiMessage();
-                    } else {
-                        end = this.noScorigamiMessage(m.getScore(), list);
-                    }
-                    // add the match to the databases.
-                    this.sm.add(m);
-                    newMatches.add(m);
-                    this.stat.add(isScorigami);
-                    if (testMode) {
-                        System.out.print("#" + this.stat.getNumberOfGames()
-                                + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
-                    } else {
-                        this.tweeter.Tweet("#" + this.stat.getNumberOfGames()
-                                + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
-                    }
-                }
-                ml.removeFirst();
-            }
-            this.addNewDataToFile(newMatches);
+        if (this.isUpdated()) {
+            return;
         }
+        MatchList ml = this.api.last15(this.leagueCode);
+        List<InfoHandler> list = getHandlers();
+        while (!ml.isEmpty()) {
+            Match m = ml.getFirst();
+            // check if the match is already in the database.
+            if (!this.sm.isMatchInMap(m)) {
+                String end;
+                boolean isScorigami = this.stat.isScorigami(m.getScore());
+                if (isScorigami) {
+                    end = this.scorigamiMessage();
+                } else {
+                    end = this.noScorigamiMessage(m.getScore(), list);
+                }
+                // add the match to the databases.
+                this.sm.add(m);
+                newMatches.add(m);
+                this.stat.add(isScorigami);
+                if (testMode) {
+                    System.out.print("#" + this.stat.getNumberOfGames()
+                            + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
+                } else {
+                    this.tweeter.Tweet("#" + this.stat.getNumberOfGames()
+                            + "\n\nFinal Score:\n" + m.toTweet() + ".\n\n" + end);
+                }
+            }
+            ml.removeFirst();
+        }
+        this.addNewDataToFile(newMatches);
     }
 
     /**
@@ -122,14 +123,13 @@ public class OutputManager {
         List<String> lines = Files.readAllLines(Path.of(this.path), StandardCharsets.UTF_8);
         lines.addAll(ml.toOutputFile());
         FileWriter fw = new FileWriter(this.path);
-        String output = "";
+        StringBuilder sb = new StringBuilder();
         for(String s : lines) {
             if (!s.equals("\n")) {
-                output = output.concat(s);
-                output = output.concat("\n");
+                sb.append(s).append("\n");
             }
         }
-        fw.write(output);
+        fw.write(sb.toString());
         fw.close();
     }
 
@@ -151,15 +151,15 @@ public class OutputManager {
             return "Closest Scorigami: " + scoreArr[0] + ".";
         }
         i = 0;
-        String txt = "Closest Scorigami:\n\n";
+        StringBuilder sb = new StringBuilder("Closest Scorigami:\n\n");
         for (InfoHandler ih : list) {
-            txt = txt.concat(ih.getDescription() + scoreArr[i] + ".");
+            sb.append(ih.getDescription()).append(scoreArr[i]).append(".");
             if (i != size - 1) {
-                txt = txt.concat("\n\n");
+                sb.append("\n\n");
             }
             i++;
         }
-        return txt;
+        return sb.toString();
     }
 
     /**
