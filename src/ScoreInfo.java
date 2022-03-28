@@ -16,11 +16,43 @@ public class ScoreInfo {
     }
 
     /**
+     * copy constructor.
+     * @param si the copy.
+     */
+    ScoreInfo(ScoreInfo si) {
+        this.possMargin = si.possMargin;
+        this.ptsMargin = si.ptsMargin;
+        this.score = si.score;
+    }
+
+    /**
      * reset to default values.
      */
     public void reset() {
         possMargin = Integer.MAX_VALUE;
         ptsMargin = Integer.MAX_VALUE;
         score = null;
+    }
+
+    /**
+     * set three values.
+     * @param poss possession margin.
+     * @param pts points margin.
+     * @param s score.
+     */
+    public void setValues(int poss, int pts, Score s) {
+        possMargin = poss;
+        ptsMargin = pts;
+        score = s;
+    }
+
+    /**
+     * set 2 values.
+     * @param pts points margin.
+     * @param s score.
+     */
+    public void setValues(int pts, Score s) {
+        ptsMargin = pts;
+        score = s;
     }
 }
