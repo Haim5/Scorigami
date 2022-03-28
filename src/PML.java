@@ -11,24 +11,15 @@ public class PML {
     private final ArrayList<Integer> pml = new ArrayList<>(Arrays.asList(0, Integer.MAX_VALUE, Integer.MAX_VALUE, 1, Integer.MAX_VALUE, 1, 2, 1));
 
     /**
-     * extend the list if needed.
-     * @param index the index we want.
-     */
-    private void extend(int index) {
-        if (index >= pml.size()) {
-            for (int i = pml.size(); i <= index; i++) {
-                pml.add(i, 1 + Math.min(Math.min(this.pml.get(i - FG), this.pml.get(i - UTRY)), this.pml.get(i - CTRY)));
-            }
-        }
-    }
-
-    /**
      * get the possession margin.
      * @param index the margin.
      * @return pml[index]
      */
     public int get(int index) {
-        extend(index);
+        // extend the list if needed.
+        for (int i = pml.size(); i <= index; i++) {
+            pml.add(i, 1 + Math.min(Math.min(this.pml.get(i - FG), this.pml.get(i - UTRY)), this.pml.get(i - CTRY)));
+        }
         return this.pml.get(index);
     }
 }
