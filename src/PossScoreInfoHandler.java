@@ -14,8 +14,7 @@ public class PossScoreInfoHandler extends InfoHandler {
             this.answer = new ScoreInfo(this.curr);
             this.limit = PML.CTRY * this.answer.possMargin;
         } else if (curr.possMargin == answer.possMargin && curr.ptsMargin < answer.ptsMargin) {
-            this.answer.score = this.curr.score;
-            this.answer.ptsMargin = this.curr.ptsMargin;
+            this.answer.setValues(this.curr.ptsMargin, this.curr.score);
         }
     }
 
