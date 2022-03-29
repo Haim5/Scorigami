@@ -68,12 +68,12 @@ public class OutputManager {
      * @throws TwitterException .
      */
     public void update(boolean testMode) throws IOException, TwitterException {
-        MatchList newMatches = new MatchList();
         // check if the database is updated.
         if (this.isUpdated()) {
             return;
         }
         MatchList ml = this.api.last15(this.leagueCode);
+        MatchList newMatches = new MatchList();
         List<InfoHandler> list = getHandlers();
         while (!ml.isEmpty()) {
             Match m = ml.getFirst();
