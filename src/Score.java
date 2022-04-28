@@ -70,4 +70,14 @@ public final class Score {
         }
         return new Score(this.awayScore, this.homeScore);
     }
+    
+    /**
+     * add points to an existing score (returns new score)
+     * @param ptsHome points to add to home.
+     * @param ptsAway points to ass to away.
+     * @return new score.
+     */
+    public Score add(int ptsHome, int ptsAway) {
+        return new Score(this.homeScore + ptsHome, this.awayScore + ptsAway);
+    }
 }
