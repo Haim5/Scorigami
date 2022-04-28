@@ -35,14 +35,14 @@ public class StatsMaker {
      * @param sih InfoHandler.
      */
     public void getClose(Score s, InfoHandler sih) {
-        int home = s.getHomeScore(), away = s.getAwayScore();
-        for (int i = away, h = 0; sih.shouldRun(h); i++, h++) {
+        for (int h = 0; sih.shouldRun(h); h++) {
             if (sih.shouldContinue(h)) {
                 continue;
             }
-            for (int j = home, k = 0; sih.shouldRun(k + h); j++, k++) {
-                sih.setValues(new Score(j, i), h, k);
-                if (!sih.shouldContinue(k) && isScorigami(sih.getCurrentScore())) {
+            for (int k = 0; sih.shouldRun(k + h); k++) {
+                Score curr = s.add(k, h);
+                if (!sih.shouldContinue(k) && isScorigami(curr)) {
+                    sih.setValues(curr, k, h);
                     sih.handle();
                 }
             }
