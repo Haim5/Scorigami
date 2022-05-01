@@ -22,14 +22,6 @@ abstract public class InfoHandler {
     }
 
     /**
-     * get the current score. (the score we need to check)
-     * @return Score.
-     */
-    public Score getCurrentScore() {
-        return curr.score;
-    }
-
-    /**
      * return the score and reset.
      * @return Score.
      */
